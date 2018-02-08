@@ -132,17 +132,7 @@ public class InstructionsDetailFragment extends Fragment   {
 //        makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) exoPlayerView.getLayoutParams();
-            params.width = params.MATCH_PARENT;
-            params.height = params.MATCH_PARENT;
-            relativeLayout.setVisibility(View.GONE);
-            cardViewForDescription.setVisibility(View.GONE);
-        }
-    }
+
 
     private void makeFullScreenWhenRotate(int orientation) {
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -177,6 +167,7 @@ public class InstructionsDetailFragment extends Fragment   {
     public void onStop() {
         super.onStop();
         if(player!=null){
+            player.stop();
             player.release();
             player = null;
         }

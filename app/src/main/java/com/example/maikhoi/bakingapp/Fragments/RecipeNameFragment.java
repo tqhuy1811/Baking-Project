@@ -42,6 +42,7 @@ public class RecipeNameFragment extends Fragment implements RecipeNameAdapter.Ca
     private static final String RECIPES_PREFERENCE_KEY = "recipes";
     private static final String RECIPE_ID_PREFERENCE_KEY = "recipeId";
     private static final String RECIPE_SIZE_PREFERENCE_KEY = "recipeSize";
+
     private int onsharedPreferferenceRecipeID;
 
     @Nullable
@@ -104,6 +105,7 @@ public class RecipeNameFragment extends Fragment implements RecipeNameAdapter.Ca
         saveDataToSharedPreference(recipesDatas);
         onsharedPreferferenceRecipeID = position;
         intent.putExtra(getResources().getString(R.string.KEY_VALUE_FOR_DATA_TRANSFER),recipesData);
+        intent.putExtra("adapterposition",position);
         startActivity(intent);
     }
 }

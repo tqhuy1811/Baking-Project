@@ -1,8 +1,11 @@
 package com.example.maikhoi.bakingapp.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,10 +19,14 @@ import com.example.maikhoi.bakingapp.Adapter.RecipeDetailShortDescriptionAdapter
 import com.example.maikhoi.bakingapp.InstructionsDetailActivity;
 import com.example.maikhoi.bakingapp.Objects.RecipesData;
 import com.example.maikhoi.bakingapp.R;
+import com.example.maikhoi.bakingapp.RecipeDetailActivity;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by MaiKhoi on 2/1/18.
@@ -38,7 +45,10 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     private String measure;
     private String quantity;
     private String ingredients;
+    private int position;
     private HashMap<String,List<String>> listHashMap;
+    private boolean mTwopane = false;
+    private static final String SHARED_PREFERENCE_NAME = "pref2";
 
 
     @Nullable
@@ -52,6 +62,7 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
             Log.i("HAHAHAHAHAHAHAHAHAHAH",String.valueOf(list.size()));
             Log.i("bbbbbbbbbbb",String.valueOf(listValue.size()));
         }
+        mTwopane = getBoolean(getContext());
         final View view = inflater.inflate(R.layout.fragment_layout_recipe_detail,container,false);
         expandableListView = view.findViewById(R.id.expandable_list_view_for_recipe_ingredients);
         recyclerView = view.findViewById(R.id.recycler_view_for_recipe_short_description);
@@ -79,6 +90,9 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     public  void getRecipeData(RecipesData recipeData){
         this.recipesData = recipeData;
     }
+    public void setTwoPaneValue(Boolean mTwopane){
+        this.mTwopane = mTwopane;
+    }
     public void setData(){
         init();
     }
@@ -99,19 +113,32 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
         }
         listHashMap.put(list.get(0),listValue);
     }
-
+    public boolean getBoolean(Context context) {
+        SharedPreferences SharedPrefs = context.getSharedPreferences(SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        boolean twoPane = SharedPrefs.getBoolean("testing2",false);
+        return twoPane;
+    }
 
     @Override
     public void onClick(int position) {
+        if(mTwopane==false){
         Bundle b = new Bundle();
         b.putInt(getResources().getString(R.string.adapter_position),position);
         b.putParcelableArray(getResources().getString(R.string.steps_detail),recipesData.recipesStepsData);
         Intent intent = new Intent(getContext(),InstructionsDetailActivity.class);
-
         intent.putExtras(b);
         startActivity(intent);
+        }else{
+        InstructionsDetailFragment instructionsDetailFragment = new InstructionsDetailFragment();
+        instructionsDetailFragment.setData(recipesData.recipesStepsData, position);
+        FragmentManager fragment = getActivity().getSupportFragmentManager();
+        this.position = position;
+        fragment.beginTransaction().replace(R.id.frame_layout_for_instructions_fragment, instructionsDetailFragment).commit();}
     }
 
+    public int getAdapterPosition(){
+        return position;
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
