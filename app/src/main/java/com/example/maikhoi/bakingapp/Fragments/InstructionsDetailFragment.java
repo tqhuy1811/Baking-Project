@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -123,11 +124,24 @@ public class InstructionsDetailFragment extends Fragment   {
                 player.seekTo(position);
                 player.setPlayWhenReady(true);
             }
+
         }
         else{
             exoPlayerView.setVisibility(View.INVISIBLE);
         }
-        makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+//        makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) exoPlayerView.getLayoutParams();
+            params.width = params.MATCH_PARENT;
+            params.height = params.MATCH_PARENT;
+            relativeLayout.setVisibility(View.GONE);
+            cardViewForDescription.setVisibility(View.GONE);
+        }
     }
 
     private void makeFullScreenWhenRotate(int orientation) {

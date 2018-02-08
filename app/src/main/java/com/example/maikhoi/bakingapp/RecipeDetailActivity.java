@@ -22,11 +22,18 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String ingredients;
     private String key;
     private String name;
+    private boolean mTwopane;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        if(findViewById(R.id.layout_for_tablet)!=null){
+            mTwopane = true;
+        }
+        else{
+            mTwopane = false;
+        }
             if(savedInstanceState==null) {
                 measure = getResources().getString(R.string.ingredients_measure);
                 quantity = getResources().getString(R.string.ingredients_quantity);
