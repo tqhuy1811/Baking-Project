@@ -66,7 +66,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     FragmentManager fragment = getSupportFragmentManager();
                     fragment.beginTransaction().add(R.id.frame_layout_for_instructions_fragment, instructionsDetailFragment).commit();
                 }
-            } else {
+            }
+        } else {
                 if (savedInstanceState == null) {
                     measure = getResources().getString(R.string.ingredients_measure);
                     quantity = getResources().getString(R.string.ingredients_quantity);
@@ -88,7 +89,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
 
         }
-    }
+    
     public void saveTwoPannelToOnShare(boolean mTwopane){
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
