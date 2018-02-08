@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,8 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     private GridLayoutManager gridLayoutManager;
     private RecipeDetailShortDescriptionAdapter recipeDetailShortDescriptionAdapter;
     private RecyclerView recyclerView;
-    private List<String> list;
+    private ArrayList<String> list;
+    private ArrayList<String> listValue;
     private String key;
     private String measure;
     private String quantity;
@@ -42,10 +44,19 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        if(savedInstanceState!=null){
+            recipesData = savedInstanceState.getParcelable("INFO");
+            listValue = savedInstanceState.getStringArrayList("TESTING");
+            list = savedInstanceState.getStringArrayList("TESTING1");
+            listHashMap = (HashMap<String,List<String>> ) savedInstanceState.getSerializable("TESTING2");
+            Log.i("HAHAHAHAHAHAHAHAHAHAH",String.valueOf(list.size()));
+            Log.i("bbbbbbbbbbb",String.valueOf(listValue.size()));
+        }
         final View view = inflater.inflate(R.layout.fragment_layout_recipe_detail,container,false);
         expandableListView = view.findViewById(R.id.expandable_list_view_for_recipe_ingredients);
         recyclerView = view.findViewById(R.id.recycler_view_for_recipe_short_description);
         gridLayoutManager = new GridLayoutManager(getContext(),1);
+
         recyclerView.setLayoutManager(gridLayoutManager);
         recipeDetailShortDescriptionAdapter = new RecipeDetailShortDescriptionAdapter(this,getContext());
         recipeDetailShortDescriptionAdapter.setRecipeData(recipesData.recipesStepsData);
@@ -81,7 +92,7 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
         list = new ArrayList<>();
         listHashMap = new HashMap<>();
         list.add(key);
-        List<String> listValue = new ArrayList<>();
+        listValue = new ArrayList<>();
         for (int i=0;i<recipesData.recipesIngredientsData.length;i++){
             listValue.add(ingredients +" "+ recipesData.recipesIngredientsData[i].ingredient);
             listValue.add(quantity+" "+recipesData.recipesIngredientsData[i].quantity+" "+ recipesData.recipesIngredientsData[i].measure);
@@ -99,5 +110,14 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
 
         intent.putExtras(b);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("INFO",recipesData);
+        outState.putStringArrayList("TESTING",listValue);
+        outState.putStringArrayList("TESTING1",list);
+        outState.putSerializable("TESTING2",listHashMap);
     }
 }
