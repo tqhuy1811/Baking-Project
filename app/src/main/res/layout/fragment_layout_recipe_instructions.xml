@@ -9,11 +9,11 @@
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="0.5">
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         app:resize_mode="fit"
         android:gravity="center"
         android:id="@+id/exo_player" />

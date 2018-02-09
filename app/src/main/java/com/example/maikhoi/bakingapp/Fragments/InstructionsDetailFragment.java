@@ -1,17 +1,21 @@
 package com.example.maikhoi.bakingapp.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +36,8 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.Arrays;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by MaiKhoi on 2/2/18.
  */
@@ -49,6 +55,8 @@ public class InstructionsDetailFragment extends Fragment   {
     private CardView cardViewForDescription;
     private CardView cardViewForExo;
     private long position = 0;
+    private boolean mTwoPane;
+    private static final String SHARED_PREFERENCE_NAME = "pref2";
 
 
     @Nullable
@@ -60,6 +68,7 @@ public class InstructionsDetailFragment extends Fragment   {
             adapterPosition = savedInstanceState.getInt("testing1");
             position = savedInstanceState.getLong("testing3");
         }
+        mTwoPane = getBoolean(getContext());
         final View view = inflater.inflate(R.layout.fragment_layout_recipe_instructions,container,false);
         textView = view.findViewById(R.id.text_view_for_description);
         exoPlayerView = view.findViewById(R.id.exo_player);
@@ -71,6 +80,12 @@ public class InstructionsDetailFragment extends Fragment   {
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                position=0;
+                if(player!=null){
+                    player.stop();
+                    player.release();
+                    player = null;
+                }
                 if(adapterPosition == 0){
                     adapterPosition = recipesStepsData.length;
                 }
@@ -82,7 +97,13 @@ public class InstructionsDetailFragment extends Fragment   {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                position=0;
                 adapterPosition++;
+                if(player!=null){
+                    player.stop();
+                    player.release();
+                    player = null;
+                }
                 if(adapterPosition == recipesStepsData.length){
                     adapterPosition = 0;
                 }
@@ -107,7 +128,11 @@ public class InstructionsDetailFragment extends Fragment   {
         return url = recipesStepsData[adapterPosition].videoURL;
     }
 
-
+    public boolean getBoolean(Context context) {
+        SharedPreferences SharedPrefs = context.getSharedPreferences(SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        boolean twoPane = SharedPrefs.getBoolean("testing2",false);
+        return twoPane;
+    }
 
     private void initializePlayer(String url) {
         if(!"".equals(url)) {
@@ -129,7 +154,10 @@ public class InstructionsDetailFragment extends Fragment   {
         else{
             exoPlayerView.setVisibility(View.INVISIBLE);
         }
-//        makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+        if(!mTwoPane) {
+            makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+        }
+
     }
 
 
@@ -141,7 +169,8 @@ public class InstructionsDetailFragment extends Fragment   {
             relativeLayout.setVisibility(View.GONE);
             cardViewForDescription.setVisibility(View.GONE);
             exoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
-            ((InstructionsDetailActivity) getActivity()).getSupportActionBar().hide();
+
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         }
     }
 
