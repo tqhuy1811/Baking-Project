@@ -7,20 +7,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.widget.ListView;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
-import com.example.maikhoi.bakingapp.Objects.RecipesData;
-import com.example.maikhoi.bakingapp.Objects.RecipesStepsData;
+import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.R;
-import com.example.maikhoi.bakingapp.RecipeListActivity;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 

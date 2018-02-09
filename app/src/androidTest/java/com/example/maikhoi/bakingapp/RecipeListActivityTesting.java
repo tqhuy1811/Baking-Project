@@ -1,12 +1,9 @@
 package com.example.maikhoi.bakingapp;
 
 import android.os.SystemClock;
-import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
-import com.example.maikhoi.bakingapp.Fragments.RecipeNameFragment;
 
 import org.junit.Before;
 import org.junit.Rule;

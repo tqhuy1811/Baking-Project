@@ -17,10 +17,8 @@ import android.widget.ExpandableListView;
 import com.example.maikhoi.bakingapp.Adapter.ExpandableListAdapterForRecipeDetail;
 import com.example.maikhoi.bakingapp.Adapter.RecipeDetailShortDescriptionAdapter;
 import com.example.maikhoi.bakingapp.InstructionsDetailActivity;
-import com.example.maikhoi.bakingapp.Objects.RecipesData;
+import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.R;
-import com.example.maikhoi.bakingapp.RecipeDetailActivity;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;

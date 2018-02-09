@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.maikhoi.bakingapp.Adapter.RecipeNameAdapter;
-import com.example.maikhoi.bakingapp.Objects.RecipesData;
+import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.R;
 import com.example.maikhoi.bakingapp.RecipeDetailActivity;
 import com.google.gson.Gson;

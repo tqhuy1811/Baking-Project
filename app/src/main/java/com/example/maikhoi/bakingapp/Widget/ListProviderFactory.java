@@ -1,21 +1,14 @@
 package com.example.maikhoi.bakingapp.Widget;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.example.maikhoi.bakingapp.Objects.RecipesData;
-import com.example.maikhoi.bakingapp.Objects.RecipesIngredientsData;
+import com.example.maikhoi.bakingapp.models.RecipesData;
+import com.example.maikhoi.bakingapp.models.RecipesIngredientsData;
 import com.example.maikhoi.bakingapp.R;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 

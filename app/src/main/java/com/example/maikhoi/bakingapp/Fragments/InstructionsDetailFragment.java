@@ -10,17 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.maikhoi.bakingapp.InstructionsDetailActivity;
-import com.example.maikhoi.bakingapp.Objects.RecipesStepsData;
+import com.example.maikhoi.bakingapp.models.RecipesStepsData;
 import com.example.maikhoi.bakingapp.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -29,7 +27,6 @@ import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -56,6 +53,7 @@ public class InstructionsDetailFragment extends Fragment   {
     private CardView cardViewForExo;
     private long position = 0;
     private boolean mTwoPane;
+    private boolean check = false;
     private static final String SHARED_PREFERENCE_NAME = "pref2";
 
 
@@ -67,6 +65,7 @@ public class InstructionsDetailFragment extends Fragment   {
             recipesStepsData  =  Arrays.copyOf(array, array.length, RecipesStepsData[].class);
             adapterPosition = savedInstanceState.getInt("testing1");
             position = savedInstanceState.getLong("testing3");
+            check = savedInstanceState.getBoolean("testing2");
         }
         mTwoPane = getBoolean(getContext());
         final View view = inflater.inflate(R.layout.fragment_layout_recipe_instructions,container,false);
@@ -75,16 +74,13 @@ public class InstructionsDetailFragment extends Fragment   {
         relativeLayout = view.findViewById(R.id.layout_buttons);
         buttonNext = view.findViewById(R.id.next_step);
         cardViewForDescription = view.findViewById(R.id.card_view_for_description);
-
         buttonPrevious = view.findViewById(R.id.previous_step);
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 position=0;
                 if(player!=null){
-                    player.stop();
-                    player.release();
-                    player = null;
+                    player.setPlayWhenReady(false);
                 }
                 if(adapterPosition == 0){
                     adapterPosition = recipesStepsData.length;
@@ -100,9 +96,7 @@ public class InstructionsDetailFragment extends Fragment   {
                 position=0;
                 adapterPosition++;
                 if(player!=null){
-                    player.stop();
-                    player.release();
-                    player = null;
+                    player.setPlayWhenReady(false);
                 }
                 if(adapterPosition == recipesStepsData.length){
                     adapterPosition = 0;
@@ -136,6 +130,7 @@ public class InstructionsDetailFragment extends Fragment   {
 
     private void initializePlayer(String url) {
         if(!"".equals(url)) {
+            check = true;
             exoPlayerView.setVisibility(View.VISIBLE);
             player = ExoPlayerFactory.newSimpleInstance(getContext(), new DefaultTrackSelector(), new DefaultLoadControl());
             exoPlayerView.setPlayer(player);
@@ -149,28 +144,23 @@ public class InstructionsDetailFragment extends Fragment   {
                 player.seekTo(position);
                 player.setPlayWhenReady(true);
             }
-
         }
         else{
             exoPlayerView.setVisibility(View.INVISIBLE);
+            check = false;
         }
-        if(!mTwoPane) {
-            makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+        if(!mTwoPane&&check) {
+                makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
+
         }
 
     }
 
-
-
     private void makeFullScreenWhenRotate(int orientation) {
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            exoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            relativeLayout.setVisibility(View.GONE);
-            cardViewForDescription.setVisibility(View.GONE);
-            exoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
-
-            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+      if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                relativeLayout.setVisibility(View.GONE);
+                cardViewForDescription.setVisibility(View.GONE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         }
     }
 
@@ -178,27 +168,50 @@ public class InstructionsDetailFragment extends Fragment   {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        position = player.getCurrentPosition();
-        outState.putLong("testing3",position);
+        if(check) {
+            position = player.getCurrentPosition();
+            outState.putLong("testing3", position);
+        }
+
+        outState.putBoolean("testing2",check );
         outState.putParcelableArray("testing",recipesStepsData);
         outState.putInt("testing1",adapterPosition);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(player!=null){
+            player.setPlayWhenReady(true);
+        }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
         if(player!=null){
-            player.setPlayWhenReady(true);
+            player.setPlayWhenReady(false);
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        Log.i("INFO", "ONSTOP");
+        if(player!=null){
+            player.setPlayWhenReady(false);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         if(player!=null){
             player.stop();
             player.release();
-            player = null;
+            player=null;
         }
     }
 

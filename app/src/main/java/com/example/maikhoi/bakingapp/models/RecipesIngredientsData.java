@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Objects;
+package com.example.maikhoi.bakingapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
