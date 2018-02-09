@@ -3,6 +3,7 @@ package com.example.maikhoi.bakingapp.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -15,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 
 import com.example.maikhoi.bakingapp.models.RecipesStepsData;
 import com.example.maikhoi.bakingapp.R;
@@ -30,10 +33,12 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 
 import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * Created by MaiKhoi on 2/2/18.
@@ -48,11 +53,11 @@ public class InstructionsDetailFragment extends Fragment   {
     private Button buttonPrevious;
     private SimpleExoPlayer player;
     private RelativeLayout relativeLayout;
-    private String url;
     private CardView cardViewForDescription;
-    private CardView cardViewForExo;
     private long position = 0;
     private boolean mTwoPane;
+    private ImageView imageView;
+    private String url;
     private boolean check = false;
     private static final String SHARED_PREFERENCE_NAME = "pref2";
 
@@ -74,6 +79,7 @@ public class InstructionsDetailFragment extends Fragment   {
         relativeLayout = view.findViewById(R.id.layout_buttons);
         buttonNext = view.findViewById(R.id.next_step);
         cardViewForDescription = view.findViewById(R.id.card_view_for_description);
+        imageView = view.findViewById(R.id.imageView_thumbnail_url);
         buttonPrevious = view.findViewById(R.id.previous_step);
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +136,7 @@ public class InstructionsDetailFragment extends Fragment   {
 
     private void initializePlayer(String url) {
         if(!"".equals(url)) {
+            if(url==recipesStepsData[adapterPosition].videoURL){
             check = true;
             exoPlayerView.setVisibility(View.VISIBLE);
             player = ExoPlayerFactory.newSimpleInstance(getContext(), new DefaultTrackSelector(), new DefaultLoadControl());
@@ -144,6 +151,17 @@ public class InstructionsDetailFragment extends Fragment   {
                 player.seekTo(position);
                 player.setPlayWhenReady(true);
             }
+            }
+            else if(url==recipesStepsData[adapterPosition].thumbnailURL) {
+                Log.i("HAHAHHAHAHAHAHA","IMAGE EXIST");
+                check = false;
+                Log.i("INFO",url);
+                Uri uri = Uri.parse(url);
+                Picasso.with(getContext()).load(uri).into(imageView);
+                exoPlayerView.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
         }
         else{
             exoPlayerView.setVisibility(View.INVISIBLE);
@@ -151,7 +169,6 @@ public class InstructionsDetailFragment extends Fragment   {
         }
         if(!mTwoPane&&check) {
                 makeFullScreenWhenRotate(getResources().getConfiguration().orientation);
-
         }
 
     }
@@ -182,8 +199,8 @@ public class InstructionsDetailFragment extends Fragment   {
     @Override
     public void onResume() {
         super.onResume();
-        if(player!=null){
-            player.setPlayWhenReady(true);
+        if(player==null){
+            initializePlayer(handlingVideoURLandThumbnailURL());
         }
 
     }
@@ -201,7 +218,9 @@ public class InstructionsDetailFragment extends Fragment   {
         super.onStop();
         Log.i("INFO", "ONSTOP");
         if(player!=null){
-            player.setPlayWhenReady(false);
+            player.stop();
+            player.release();
+            player=null;
         }
     }
 

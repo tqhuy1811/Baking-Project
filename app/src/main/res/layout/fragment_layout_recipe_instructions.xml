@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -9,14 +10,19 @@
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_height="wrap_content">
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:layout_width="match_parent"
         android:layout_height="350dp"
         app:resize_mode="fit"
         android:gravity="center"
         android:id="@+id/exo_player" />
+
+        <ImageView
+            android:id="@+id/imageView_thumbnail_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:visibility="invisible"/>
     </FrameLayout>
 
 
