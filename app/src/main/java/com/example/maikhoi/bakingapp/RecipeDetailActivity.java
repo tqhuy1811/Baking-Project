@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -25,7 +26,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String name;
     private RecipesStepsData[] recipesStepsData;
     private int adapterPosition;
-    public boolean mTwopane;
+    private boolean mTwopane;
+
     private static final String SHARED_PREFERENCE_NAME = "pref2";
 
     @Override
@@ -76,7 +78,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         recipeDetailFragment.getRecipeData(recipesData);
                         name = recipesData.name;
                         setTitle(name);
-
                         recipeDetailFragment.getStringData(measure, quantity, ingredients, key);
 
                         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -103,14 +104,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
             saveTwoPannelToOnShare(mTwopane);
             Log.i("HAHAHAHAHAHA",String.valueOf(mTwopane));
             setTitle(name);
+            }
         }
-    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("testing",name);
         outState.putBoolean("testing1",mTwopane);
+
     }
 }
 
