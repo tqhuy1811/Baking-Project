@@ -6,8 +6,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:id="@+id/expandable_list_view_child"/>
+        android:id="@+id/ingredients_name"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredients_quantity_measure"
+        android:textSize="15dp"/>
 
 </LinearLayout>

@@ -50,7 +50,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     name = recipesData.name;
                     setTitle(name);
                     recipeDetailFragment.getStringData(measure, quantity, ingredients, key);
-                    recipeDetailFragment.setData();
+
                     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().add(R.id.recipe_detail_fragment_instance, recipeDetailFragment).commit();
                     InstructionsDetailFragment instructionsDetailFragment = new InstructionsDetailFragment();
@@ -78,7 +78,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         setTitle(name);
 
                         recipeDetailFragment.getStringData(measure, quantity, ingredients, key);
-                        recipeDetailFragment.setData();
+
                         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                         fragmentManager.beginTransaction().add(R.id.recipe_detail_fragment_instance, recipeDetailFragment).commit();
                     }

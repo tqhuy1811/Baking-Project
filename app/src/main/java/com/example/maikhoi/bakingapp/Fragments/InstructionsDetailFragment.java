@@ -58,6 +58,7 @@ public class InstructionsDetailFragment extends Fragment   {
     private boolean mTwoPane;
     private ImageView imageView;
     private String url;
+    private boolean isPlaying;
     private boolean check = false;
     private static final String SHARED_PREFERENCE_NAME = "pref2";
 
@@ -71,6 +72,7 @@ public class InstructionsDetailFragment extends Fragment   {
             adapterPosition = savedInstanceState.getInt("testing1");
             position = savedInstanceState.getLong("testing3");
             check = savedInstanceState.getBoolean("testing2");
+            isPlaying = savedInstanceState.getBoolean("testing4");
         }
         mTwoPane = getBoolean(getContext());
         final View view = inflater.inflate(R.layout.fragment_layout_recipe_instructions,container,false);
@@ -86,7 +88,9 @@ public class InstructionsDetailFragment extends Fragment   {
             public void onClick(View view) {
                 position=0;
                 if(player!=null){
-                    player.setPlayWhenReady(false);
+                    player.stop();
+                    player.release();
+                    player =null;
                 }
                 if(adapterPosition == 0){
                     adapterPosition = recipesStepsData.length;
@@ -102,7 +106,9 @@ public class InstructionsDetailFragment extends Fragment   {
                 position=0;
                 adapterPosition++;
                 if(player!=null){
-                    player.setPlayWhenReady(false);
+                    player.stop();
+                    player.release();
+                    player =null;
                 }
                 if(adapterPosition == recipesStepsData.length){
                     adapterPosition = 0;
@@ -146,10 +152,10 @@ public class InstructionsDetailFragment extends Fragment   {
             MediaSource mediaSource = new ExtractorMediaSource(uri, new DefaultDataSourceFactory(
                     getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
             player.prepare(mediaSource);
-            player.setPlayWhenReady(true);
+            player.setPlayWhenReady(isPlaying);
             if(position>0){
                 player.seekTo(position);
-                player.setPlayWhenReady(true);
+                player.setPlayWhenReady(isPlaying);
             }
             }
             else if(url==recipesStepsData[adapterPosition].thumbnailURL) {
@@ -189,7 +195,7 @@ public class InstructionsDetailFragment extends Fragment   {
             position = player.getCurrentPosition();
             outState.putLong("testing3", position);
         }
-
+        outState.putBoolean("testing4",isPlaying);
         outState.putBoolean("testing2",check );
         outState.putParcelableArray("testing",recipesStepsData);
         outState.putInt("testing1",adapterPosition);
@@ -209,6 +215,7 @@ public class InstructionsDetailFragment extends Fragment   {
     public void onPause() {
         super.onPause();
         if(player!=null){
+             isPlaying = player.getPlayWhenReady();
             player.setPlayWhenReady(false);
         }
     }
