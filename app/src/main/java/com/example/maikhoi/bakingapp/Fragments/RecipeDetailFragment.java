@@ -89,10 +89,13 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     public  void getRecipeData(RecipesData recipeData){
         this.recipesData = recipeData;
     }
-        this.mTwopane = mTwopane;
-    }
-    public void setData(){
-        init();
+
+
+    public void init(){
+        arrayList = new ArrayList<>();
+        ingredientsName = recipesData.recipesIngredientsData;
+        for (int i=0;i<recipesData.recipesIngredientsData.length;i++){
+            arrayList.add(quantity+" "+recipesData.recipesIngredientsData[i].quantity+" "+ recipesData.recipesIngredientsData[i].measure);
         }
     }
 
