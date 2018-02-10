@@ -22,7 +22,7 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Ca
     public RecipesData[] data;
     private final CardViewOnClickHandler clickHandler;
     public Context context;
-    public int[] imageData;
+
     public RecipeNameAdapter(Context context, CardViewOnClickHandler clickHandler){
         this.context = context;
         this.clickHandler = clickHandler;
@@ -43,7 +43,7 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Ca
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
         holder.recipeName.setText(data[position].name);
-        Picasso.with(context).load(imageData[position]).into(holder.imageView);
+
     }
 
     @Override
@@ -54,12 +54,12 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Ca
 
     public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView recipeName;
-        public ImageView imageView;
+
 
         public CardHolder(View itemView){
             super(itemView);
             recipeName = itemView.findViewById(R.id.text_view_display_recipe_name);
-            imageView = itemView.findViewById(R.id.recipe_image);
+
             itemView.setOnClickListener(this);
         }
 
@@ -78,11 +78,6 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Ca
             Log.i("INFO","EMPTY");
         }
     }
-    public void setImageData(int[] imageData){
-        if(imageData!=null){
-            this.imageData = imageData;
-            notifyDataSetChanged();
-        }
     }
 
-}
+

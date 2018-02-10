@@ -13,11 +13,7 @@
         android:elevation="3dp"
         android:layout_margin="5dp"
         app:cardCornerRadius="5dp">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recipe_image"
-                android:scaleType="center" />
+
             <TextView
                 android:id="@+id/text_view_display_recipe_name"
                 android:layout_width="match_parent"

@@ -59,8 +59,8 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if(savedInstanceState!=null){
             recipesData = savedInstanceState.getParcelable("INFO");
-            arrayList = savedInstanceState.getStringArrayList("INFO2");
-            Parcelable[] array = savedInstanceState.getParcelableArray("INFO3");
+            arrayList = savedInstanceState.getStringArrayList("INFO1");
+            Parcelable[] array = savedInstanceState.getParcelableArray("INFO2");
             ingredientsName = Arrays.copyOf(array,array.length,RecipesIngredientsData[].class);
         }
         mTwopane = getBoolean(getContext());
@@ -137,7 +137,7 @@ public class RecipeDetailFragment extends android.support.v4.app.Fragment implem
         super.onSaveInstanceState(outState);
         outState.putParcelable("INFO",recipesData);
         outState.putStringArrayList("INFO1",arrayList);
-        outState.putParcelableArray("INFO2",recipesData.recipesIngredientsData);
+        outState.putParcelableArray("INFO2",ingredientsName);
 
     }
 }

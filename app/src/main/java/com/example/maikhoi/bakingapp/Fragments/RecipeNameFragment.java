@@ -36,7 +36,7 @@ public class RecipeNameFragment extends Fragment implements RecipeNameAdapter.Ca
     private GridLayoutManager gridLayoutManager;
     private RecipeNameAdapter recipeNameAdapter;
     private RecyclerView recyclerView;
-    private int[] imageId;
+
     private RecipesData[] recipesDatas;
     private static final String SHARED_PREFERENCE_NAME = "pref";
     private static final String RECIPES_PREFERENCE_KEY = "recipes";
@@ -59,7 +59,7 @@ public class RecipeNameFragment extends Fragment implements RecipeNameAdapter.Ca
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
         requestQueue = Volley.newRequestQueue(getContext());
-        imageId = new int[]{R.drawable.nutellapie,R.drawable.brownies,R.drawable.yellowcake,R.drawable.cheesecake};
+
         fetchPosts();
         return rootView;
     }
@@ -85,7 +85,7 @@ public class RecipeNameFragment extends Fragment implements RecipeNameAdapter.Ca
         @Override
         public void onResponse(String response) {
             recipesDatas = gson.fromJson(response,RecipesData[].class);
-            recipeNameAdapter.setImageData(imageId);
+
             recipeNameAdapter.setRecipeData(recipesDatas);
 
             recyclerView.setAdapter(recipeNameAdapter);
