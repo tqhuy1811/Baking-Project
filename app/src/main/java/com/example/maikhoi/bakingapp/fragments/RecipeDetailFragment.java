@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Fragments;
+package com.example.maikhoi.bakingapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +10,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 
-import com.example.maikhoi.bakingapp.Adapter.RecipeDetailShortDescriptionAdapter;
-import com.example.maikhoi.bakingapp.Adapter.RecipeIngredientsAdapter;
+import com.example.maikhoi.bakingapp.adapter.RecipeDetailShortDescriptionAdapter;
+import com.example.maikhoi.bakingapp.adapter.RecipeIngredientsAdapter;
 import com.example.maikhoi.bakingapp.InstructionsDetailActivity;
 import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.R;
@@ -25,8 +23,6 @@ import com.example.maikhoi.bakingapp.models.RecipesIngredientsData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 

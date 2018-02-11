@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.example.maikhoi.bakingapp.Fragments.RecipeNameFragment"
+    android:name="com.example.maikhoi.bakingapp.fragments.RecipeNameFragment"
     android:id="@+id/recipe_name_fragment_layout"
     tools:context="com.example.maikhoi.bakingapp.RecipeListActivity">
 </fragment>

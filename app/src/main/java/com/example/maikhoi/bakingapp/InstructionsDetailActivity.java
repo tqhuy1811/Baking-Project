@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.maikhoi.bakingapp.Fragments.InstructionsDetailFragment;
+import com.example.maikhoi.bakingapp.fragments.InstructionsDetailFragment;
 import com.example.maikhoi.bakingapp.models.RecipesStepsData;
 
 import java.util.Arrays;

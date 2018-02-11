@@ -4,12 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.maikhoi.bakingapp.Fragments.InstructionsDetailFragment;
-import com.example.maikhoi.bakingapp.Fragments.RecipeDetailFragment;
+import com.example.maikhoi.bakingapp.fragments.InstructionsDetailFragment;
+import com.example.maikhoi.bakingapp.fragments.RecipeDetailFragment;
 import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.models.RecipesStepsData;
 

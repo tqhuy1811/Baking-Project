@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Fragments;
+package com.example.maikhoi.bakingapp.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -201,11 +201,18 @@ public class InstructionsDetailFragment extends Fragment   {
         outState.putInt("testing1",adapterPosition);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            initializePlayer(handlingVideoURLandThumbnailURL());
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(player==null){
+        if(Util.SDK_INT <= 23 || player==null){
             initializePlayer(handlingVideoURLandThumbnailURL());
         }
 
@@ -214,9 +221,11 @@ public class InstructionsDetailFragment extends Fragment   {
     @Override
     public void onPause() {
         super.onPause();
-        if(player!=null){
-             isPlaying = player.getPlayWhenReady();
-            player.setPlayWhenReady(false);
+        if(Util.SDK_INT <= 23) {
+            if (player != null) {
+                isPlaying = player.getPlayWhenReady();
+                player.setPlayWhenReady(false);
+            }
         }
     }
 
@@ -224,10 +233,12 @@ public class InstructionsDetailFragment extends Fragment   {
     public void onStop() {
         super.onStop();
         Log.i("INFO", "ONSTOP");
-        if(player!=null){
-            player.stop();
-            player.release();
-            player=null;
+        if(Util.SDK_INT > 23) {
+            if (player != null) {
+                player.stop();
+                player.release();
+                player = null;
+            }
         }
     }
 

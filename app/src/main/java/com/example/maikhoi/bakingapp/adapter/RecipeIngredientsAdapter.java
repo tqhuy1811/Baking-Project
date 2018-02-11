@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Adapter;
+package com.example.maikhoi.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

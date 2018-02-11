@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Widget;
+package com.example.maikhoi.bakingapp.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;

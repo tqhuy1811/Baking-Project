@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Fragments;
+package com.example.maikhoi.bakingapp.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.maikhoi.bakingapp.Adapter.RecipeNameAdapter;
+import com.example.maikhoi.bakingapp.adapter.RecipeNameAdapter;
 import com.example.maikhoi.bakingapp.models.RecipesData;
 import com.example.maikhoi.bakingapp.R;
 import com.example.maikhoi.bakingapp.RecipeDetailActivity;

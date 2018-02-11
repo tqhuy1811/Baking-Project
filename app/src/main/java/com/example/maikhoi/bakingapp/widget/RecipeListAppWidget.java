@@ -1,4 +1,4 @@
-package com.example.maikhoi.bakingapp.Widget;
+package com.example.maikhoi.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Implementation of App Widget functionality.
+ * Implementation of App widget functionality.
  */
 public class RecipeListAppWidget extends AppWidgetProvider {
     private static final String SHARED_PREFERENCE_NAME = "pref";
